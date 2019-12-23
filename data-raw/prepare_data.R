@@ -55,7 +55,36 @@ hogar <- process_epf_file('hogar', epf_dict)
 gastos <- process_epf_file('gastos', epf_dict)
 miembros <- process_epf_file('miembros', epf_dict)
 
+# drop FACTOR column from gastos and miembros data frames
+gastos$FACTOR <- NULL
+miembros$FACTOR <- NULL
+
+# drop ANOENC column from all data frames
+gastos$ANOENC <- NULL
+hogar$ANOENC <- NULL
+miembros$ANOENC <- NULL
+
+# split data frame gastos into two:
+# - gastos: total expenditures, quantities, etc
+# - gastos_tipo: monetary and non monetary expenditures
+gastos_tipo <- gastos %>%
+  transmute(CODIGO = CODIGO,
+            NUMERO = NUMERO,
+            MON = GASTMON,
+            NOM1 = GASTNOM1,
+            NOM2 = GASTNOM2,
+            NOM3 = GASTNOM3,
+            NOM4 = GASTNOM4,
+            NOM5 = GASTNOM5) %>%
+  tidyr::pivot_longer(c(-CODIGO, -NUMERO), names_to = "TIPO",
+                      values_to = "GASTO") %>%
+  filter(!is.na(GASTO) | GASTO == 0)
+
+gastos <- gastos %>% select(-(GASTMON:GASTNOM5))
+
+
 usethis::use_data(hogar, compress = 'xz', overwrite = TRUE, version = 3)
 usethis::use_data(gastos, compress = 'xz', overwrite = TRUE, version = 3)
+usethis::use_data(gastos_tipo, compress = 'xz', overwrite = TRUE, version = 3)
 usethis::use_data(miembros, compress = 'xz', overwrite = TRUE, version = 3)
 
