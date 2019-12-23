@@ -12,3 +12,5 @@ Description: This package provide access to data from the 2018 edition of the
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/jcpernias/epf2018
+BugReports: https://github.com/jcpernias/epf2018/issues
