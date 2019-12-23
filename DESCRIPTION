@@ -1,0 +1,14 @@
+Package: epf2018
+Title: Data from the Encuesta de Presupuestos Familiares 2018
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "José",
+           family = "Pernías",
+           role = c("aut", "cre"),
+           email = "jcpernias@gmail.com")
+Description: This package provide access to data from the 2018 edition of the 
+  Encuesta de Presupuestos Familiares, collected by the INE, the Spanish 
+  Statistical Office: https://www.ine.es.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
